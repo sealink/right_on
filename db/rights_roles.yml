@@ -1,0 +1,16 @@
+rights:
+  general:
+    - models:
+      - index
+      - view
+      - change
+  admin:
+    - users
+
+roles:
+  simple_role:
+    - models@index
+  advanced_role:
+    - models
+    - models@index
+    - users
