@@ -1,0 +1,15 @@
+%fieldset.top_bordered
+  %legend Access Rights
+  #rights.float_left{:style => 'overflow:visible'}
+  = f.hm_empty_array :right_ids
+  - Right.by_groups.each_pair do |group, rights|
+    %h2= group.titleize
+    - rights.in_groups(3).each do |rights|
+      .float_left{:style => 'width: 30%'}
+        - for right in rights
+          - if right
+            %label[right]
+              = f.hm_check_box :right_ids, right.id
+              = truncate_with_title(right.sensible_name, :length => 50)
+              %br
+    .clear

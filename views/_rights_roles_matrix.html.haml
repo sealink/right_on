@@ -1,0 +1,24 @@
+- rights = Right.all.sort_by(&:name)
+- roles = current_objects
+- right_ids_by_role = roles.hash_by(:id){|r| r.right_ids}
+%table.general_table(style="width: auto; margin-top: 50px")
+  %tbody
+    - Right.by_groups.each_pair do |group, rights|
+      %tr
+        %th{:colspan => roles.size+1, :style => 'height: 40px; background: none'}
+      %tr
+        %th(style="width: 250px; height: 40px")= group.titleize
+        - roles.each do |role|
+          %th.diagonal(style="width: 10px")
+            %span.title(id="matrix_role_#{role.id}" class="matrix_role")
+              = truncate_with_title(role.to_s, 15)
+      - rights.each do |right|
+        - klass = cycle('striped_row2', '')
+        %tr(style="padding: 0;" class=klass)
+          %td(style="text-align: left; padding: 0")
+            %strong= truncate_with_title(right.sensible_name, :length => 35)
+          - roles.each do |role|
+            - has_right = right_ids_by_role[role.id].include?(right.id)
+            %td(style="text-align: left; padding: 0; text-align: center; #{has_right ? 'background-color: green' : ''}")
+      
+
