@@ -5,7 +5,11 @@ class Right < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
 
-  named_scope :ordered, :order => 'name'
+  if respond_to? :named_scope
+    named_scope :ordered, :order => 'name'
+  else
+    scope :ordered, order(:name)
+  end
 
   after_save :clear_cache
   after_destroy :clear_cache

@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   ## the sub! line in the Rakefile
   s.name              = 'right_on'
   s.version           = '0.0.1'
-  s.date              = '2012-04-09'
+  s.date              = '2012-04-29'
   s.rubyforge_project = 'right_on'
 
   ## Make sure your summary is short. The description may be as long
@@ -47,8 +47,8 @@ Gem::Specification.new do |s|
 
   ## List your runtime dependencies here. Runtime dependencies are those
   ## that are needed for an end user to actually USE your code.
-  s.add_dependency('activerecord', [">= 2.0.0", "< 3.0.0"])
-  s.add_dependency('dependent_protect', [">= 0.0.2"])
+  s.add_dependency('activerecord', [">= 2.0.0", "< 4.0.0"])
+  s.add_dependency('dependent_protect', [">= 0.0.3"])
 
   ## List your development dependencies here. Development dependencies are
   ## those that are only needed during development
@@ -65,6 +65,8 @@ Gem::Specification.new do |s|
     Rakefile
     db/migration.rb
     db/rights_roles.yml
+    gemfiles/rails2.gemfile
+    gemfiles/rails3.gemfile
     lib/right_on.rb
     lib/right_on/action_controller_extensions.rb
     lib/right_on/restricted_by_right.rb
@@ -76,6 +78,8 @@ Gem::Specification.new do |s|
     spec/right_on_spec.rb
     spec/schema.rb
     spec/spec_helper.rb
+    views/_edit_rights.html.haml
+    views/_rights_roles_matrix.html.haml
   ]
   # = MANIFEST =
 

@@ -48,8 +48,8 @@ describe Right do
   end
 
   it 'should identify correct groups' do
-    rights = Right.regular_rights_with_group
-    rights.map(&:name).should == %w(models models#index models#view models#change users)
+    rights = Right.regular_rights_with_group.sort_by{|r| r.name} # Sort for ruby 1.9 compatibility
+    rights.map(&:name).should == %w(models models#change models#index models#view users)
     rights.map(&:group).should == %w(general general general general admin)
 
     Right.by_groups.should == {
