@@ -15,6 +15,10 @@ module RightOn
 
     # Checks the access privilege of the user and returns true or false
     def access_allowed?(opts={})
+      if opts.is_a?(String)
+        controller, action = opts.split('#')
+        opts = {:controller => controller, :action => action}
+      end
       opts[:controller] ||= params[:controller]
       opts[:action]     ||= params[:action]
       current_user.rights.any? { |r| r.allowed?(opts.slice(:controller, :action)) }
