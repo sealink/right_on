@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   ## the sub! line in the Rakefile
   s.name              = 'right_on'
   s.version           = '0.0.1'
-  s.date              = '2012-04-29'
+  s.date              = '2012-06-10'
   s.rubyforge_project = 'right_on'
 
   ## Make sure your summary is short. The description may be as long
@@ -48,7 +48,7 @@ Gem::Specification.new do |s|
   ## List your runtime dependencies here. Runtime dependencies are those
   ## that are needed for an end user to actually USE your code.
   s.add_dependency('activerecord', [">= 2.0.0", "< 4.0.0"])
-  s.add_dependency('dependent_protect', [">= 0.0.3"])
+  s.add_dependency('dependent_protect', [">= 0.0.4"])
 
   ## List your development dependencies here. Development dependencies are
   ## those that are only needed during development
