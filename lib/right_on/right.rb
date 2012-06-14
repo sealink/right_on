@@ -1,3 +1,4 @@
+require 'active_record'
 class Right < ActiveRecord::Base
 
   has_and_belongs_to_many :roles
@@ -5,10 +6,10 @@ class Right < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
 
-  if respond_to? :named_scope
-    named_scope :ordered, :order => 'name'
-  else
+  if Rails.version > '3'
     scope :ordered, order(:name)
+  else
+    named_scope :ordered, :order => 'name'
   end
 
   after_save :clear_cache

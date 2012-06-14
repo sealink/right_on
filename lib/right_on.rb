@@ -7,9 +7,6 @@ module RightOn
   require 'right_on/restricted_by_right'
   ActiveRecord::Base.send(:include, RestrictedByRight)
 
-  require 'right_on/role_model'
-  require 'right_on/right'
-  require 'right_on/role'
-  require 'right_on/action_controller_extensions'
+  require 'right_on/railtie' if defined?(Rails::Railtie)
 end
 
