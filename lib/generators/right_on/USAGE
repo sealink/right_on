@@ -1,0 +1,8 @@
+Description:
+    Generates a new database migration for adding a right. 
+    Pass the right name and an optional list of attribute pairs as arguments.
+
+    A migration class is generated in db/migrate prefixed by a timestamp of the current date and time.
+
+Example:
+    `rails generate right_on:right_migration my_controllers/my_new_controller#my_new_action`

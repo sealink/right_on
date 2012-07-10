@@ -67,6 +67,9 @@ Gem::Specification.new do |s|
     db/rights_roles.yml
     gemfiles/rails2.gemfile
     gemfiles/rails3.gemfile
+    lib/generators/right_on/right_migration_generator.rb
+    lib/generators/right_on/USAGE
+    lib/generators/right_on/templates/right_migration.rb
     lib/right_on.rb
     lib/right_on/action_controller_extensions.rb
     lib/right_on/restricted_by_right.rb
