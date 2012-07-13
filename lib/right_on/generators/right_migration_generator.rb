@@ -12,13 +12,12 @@ module RightOn
         :desc => "Indicates the right's controller"
       class_option :action,     :type => :string, :required => false, 
         :desc => "Indicates the right's action"
-      class_option :roles,      :type => :array,  :required => false, 
-        :desc => "Indicates the roles to which the right should be granted", 
-        :banner => "role_1 role_2 role_3"
+      class_option :right,      :type => :string, :required => false, 
+        :desc => "Indicates an existing right. Any role including this right will also include the new right"
       
       
       def generate_migration
-        raise MissingArgument, "Either name or controller must be specified" if right_controller.blank?
+        raise ArgumentError, "Either name or controller must be specified" if right_controller.blank?
         migration_template "right_migration.rb", "db/migrate/add_#{parsed_right_name}_right.rb"
       end
       
@@ -44,10 +43,10 @@ module RightOn
       def right_name
         name.presence || [right_controller, right_action].compact.join('#')
       end
-      
-      
-      def right_roles
-        Array.wrap(options[:roles])
+
+
+      def right_for_roles
+        options[:right]
       end
       
       

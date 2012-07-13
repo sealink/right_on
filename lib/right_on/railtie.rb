@@ -4,4 +4,9 @@ class Railtie < Rails::Railtie
       require 'right_on/rails'
     end
   end
+
+  rake_tasks do
+    load "right_on/tasks/seeds_rights.rake"
+    load "right_on/tasks/rights_roles.rake"
+  end
 end

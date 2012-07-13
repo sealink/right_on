@@ -16,11 +16,13 @@ end
 class Add<%= parsed_right_name.camelize %>Right < ActiveRecord::Migration
   
   def self.up
+    right_for_roles = Right.find_by_name("<%= right_for_roles %>")
     Right.create(
-      :controller   => '<%= right_controller %>'.presence, 
-      :action       => '<%= right_action %>'.presence, 
-      :name         => '<%= right_name %>'.presence, 
-      :roles        => Role.all(:conditions => {:title => [<%= right_roles.map { |r| "'#{r}'"}.join(',') %>]}))
+      :controller => '<%= right_controller %>'.presence,
+      :action     => '<%= right_action %>'.presence,
+      :name       => '<%= right_name %>'.presence,
+      :roles      => right_for_roles.roles
+    )
   end
   
   

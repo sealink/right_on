@@ -8,5 +8,6 @@ module RightOn
   ActiveRecord::Base.send(:include, RestrictedByRight)
 
   require 'right_on/railtie' if defined?(Rails::Railtie)
+  require 'right_on/rights_manager'
 end
 

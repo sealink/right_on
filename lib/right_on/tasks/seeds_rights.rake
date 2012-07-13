@@ -1,6 +1,6 @@
 namespace "db" do
   namespace "seed" do
-    desc "Seed initial rights to each role for the QUICKTRAVEL booking system"
+    desc "Seed initial rights to each role"
     task :rights => :environment do
       load "#{Rails.root}/db/fixtures/rights_roles.rb" 
     end

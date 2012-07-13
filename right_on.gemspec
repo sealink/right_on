@@ -49,6 +49,7 @@ Gem::Specification.new do |s|
   ## that are needed for an end user to actually USE your code.
   s.add_dependency('activerecord', [">= 2.0.0", "< 4.0.0"])
   s.add_dependency('dependent_protect', [">= 0.0.4"])
+  s.add_dependency('input_reader', ["~> 0.0"])
 
   ## List your development dependencies here. Development dependencies are
   ## those that are only needed during development
