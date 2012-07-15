@@ -44,7 +44,7 @@ describe Right do
     right = @model.right
     right.should_not be_nil
     right.name.should == 'Model: Test'
-    lambda{right.destroy}.should raise_error(ActiveRecord::DeleteRestrictionError)
+    expect{right.destroy}.to raise_error(ActiveRecord::DetailedDeleteRestrictionError)
   end
 
   it 'should identify correct groups' do
