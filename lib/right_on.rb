@@ -7,7 +7,14 @@ module RightOn
   require 'right_on/restricted_by_right'
   ActiveRecord::Base.send(:include, RestrictedByRight)
 
-  require 'right_on/railtie' if defined?(Rails::Railtie)
-  require 'right_on/rights_manager'
+  begin
+    require 'rails'
+  rescue LoadError # if rails2
+    require 'initializer'
+  end
+  if defined?(Rails::Railtie)
+    require 'right_on/railtie'
+    require 'right_on/rights_manager'
+  end
 end
 

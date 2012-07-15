@@ -8,8 +8,6 @@
 require 'rubygems'
 require 'bundler/setup'
 
-require 'rails'
-
 if ENV['COVERAGE']
   require 'simplecov'
   require 'simplecov-rcov'
