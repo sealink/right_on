@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   ## the sub! line in the Rakefile
   s.name              = 'right_on'
   s.version           = '0.0.1'
-  s.date              = '2012-06-10'
+  s.date              = '2012-07-24'
   s.rubyforge_project = 'right_on'
 
   ## Make sure your summary is short. The description may be as long
@@ -68,16 +68,21 @@ Gem::Specification.new do |s|
     db/rights_roles.yml
     gemfiles/rails2.gemfile
     gemfiles/rails3.gemfile
-    lib/generators/right_on/right_migration_generator.rb
-    lib/generators/right_on/USAGE
-    lib/generators/right_on/templates/right_migration.rb
     lib/right_on.rb
     lib/right_on/action_controller_extensions.rb
+    lib/right_on/generators/USAGE
+    lib/right_on/generators/right_migration_generator.rb
+    lib/right_on/generators/templates/right_migration.rb
+    lib/right_on/rails.rb
+    lib/right_on/railtie.rb
     lib/right_on/restricted_by_right.rb
     lib/right_on/right.rb
+    lib/right_on/rights_manager.rb
     lib/right_on/role.rb
     lib/right_on/role_model.rb
+    lib/right_on/tasks/rights_roles.rake
     lib/right_on/tasks/seeds_rights.rake
+    rails/init.rb
     right_on.gemspec
     spec/right_on_spec.rb
     spec/schema.rb
