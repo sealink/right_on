@@ -137,7 +137,11 @@ class Right < ActiveRecord::Base
   end
 
   def self.cache
-    Rails.cache
+    @@cache ||= Rails.cache
+  end
+
+  def self.cache=(cache)
+    @@cache = cache
   end
 
   def self.clear_cache

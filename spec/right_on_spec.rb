@@ -19,8 +19,6 @@ describe Right do
     Right.delete_all
     Model.delete_all
 
-    Right.stub!(:cache).and_return(ActiveSupport::Cache::MemoryStore.new)
-
     @model = Model.create!(:name => 'Test')
 
     @users = Right.create!(:name => 'users', :controller => 'users')
@@ -87,3 +85,60 @@ describe Right do
     @change.allowed?(hello_action).should be_false
   end
 end
+
+describe Right, "when created" do
+  it "should validate presence of name" do
+    subject.valid?
+    subject.errors[:name].should_not be_blank
+  end
+end
+
+describe Right, "with a name and controller" do
+  before do
+    @new_right = Right.new(:name => "tickets", :controller => "tickets")
+    @new_right.save!
+  end
+  
+  it "should create a new right" do
+    @new_right.name.should == "tickets"
+    @new_right.controller.should == "tickets"
+    @new_right.save.should be_true
+  end
+  
+end
+
+describe Right, "with a name, controller and action" do
+  before do
+    @new_right = Right.new(:name => "tickets@destroy", :controller => "tickets", :action => "destroy")
+  end
+   
+  it "should create a new right" do
+    @new_right.name.should == "tickets@destroy"
+    @new_right.controller.should == "tickets"
+    @new_right.action.should == "destroy"
+    @new_right.save.should be_true
+  end
+end
+
+describe Right, "with only a name" do
+  before do
+    @new_right = Right.new(:name => "tickets2")
+  end
+
+  it "should create a new right" do
+    @new_right.save.should be_true
+  end
+end
+
+describe Right, "with the same name" do
+  before do
+    @old_right = Right.new(:name => "tickets3", :controller => "tickets")
+    @old_right.save!
+    @new_right = Right.new(:name => "tickets3", :controller => "tickets")
+  end
+
+  it "should not create a new right" do
+    @new_right.save.should be_false
+  end
+end
+
