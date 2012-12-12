@@ -3,14 +3,15 @@ module RightOn
   module ActionControllerExtensions
 
     def self.included(base)
-      base.module_eval <<-EVAL
+      base.module_eval do
         helper_method :access_allowed?
-      EVAL
+        class_attribute :rights_from
+      end
     end
 
     # Checks the access privilege of the user and renders permission_denied page if required
     def verify_rights
-      access_allowed?(params.slice(:controller, :action)) || permission_denied
+      access_allowed?(controller_action_options) || permission_denied
     end
 
     # Checks the access privilege of the user and returns true or false
@@ -26,7 +27,7 @@ module RightOn
 
     # Called if a security check determines permission is denied
     def permission_denied
-      @right_allowed = Right.all.detect{|right| right.allowed?(params.slice(:controller, :action))}
+      @right_allowed = Right.all.detect{|right| right.allowed?(controller_action_options)}
       @roles_allowed = @right_allowed.roles if @right_allowed
       @controller_name = params[:controller] unless @right_allowed
 
@@ -60,6 +61,12 @@ MESSAGE
       end
 
       false
+    end
+
+    def controller_action_options
+      opts = params.slice(:controller, :action)
+      opts[:controller] = rights_from.to_s if rights_from
+      opts
     end
 
   end
