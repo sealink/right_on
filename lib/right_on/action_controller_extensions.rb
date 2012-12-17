@@ -4,6 +4,7 @@ module RightOn
 
     def self.included(base)
       base.module_eval <<-EVAL
+        cattr_accessor :permission_denied_layout
         helper_method :access_allowed?
       EVAL
     end
@@ -45,7 +46,7 @@ MESSAGE
         end
       else
         respond_to do |format|
-          format.html { render :template => 'permission_denied' }
+          format.html { render :template => 'permission_denied', :layout => (permission_denied_layout || false) }
           format.json do
             render :json => {
               :error => 'Permission Denied',
