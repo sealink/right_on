@@ -6,6 +6,7 @@ module RightOn
       base.module_eval do
         helper_method :access_allowed?
         class_attribute :rights_from
+        class_attribute :permission_denied_layout
       end
     end
 
@@ -32,7 +33,7 @@ module RightOn
       @controller_name = params[:controller] unless @right_allowed
 
       respond_to do |format|
-        format.html { render :status => 550, :template => 'permission_denied' }
+        format.html { render :status => 550, :template => 'permission_denied', :layout => (permission_denied_layout || false) }
         format.json do
           render :status => 550, :json => {
             :error => 'Permission Denied',
