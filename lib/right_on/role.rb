@@ -6,7 +6,7 @@ class Role < ActiveRecord::Base
   validates_uniqueness_of :title
 
   def to_s
-    self.title.titleize
+    self.title.try(:titleize)
   end
 
   alias_method :name, :to_s
