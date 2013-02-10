@@ -1,6 +1,10 @@
 Right On
 ========
 
+[![Build Status](https://travis-ci.org/sealink/right_on.png?branch=master)](https://travis-ci.org/sealink/right_on)
+[![Build Status](https://gemnasium.com/sealink/right_on.png?travis)](https://gemnasium.com/sealink/right_on)
+[![Build Status](https://codeclimate.com/github/sealink/right_on.png)](https://codeclimate.com/github/sealink/right_on)
+
 # DESCRIPTION
 
 Gives rails applications a way to manage rights/roles
