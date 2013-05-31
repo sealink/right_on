@@ -73,7 +73,7 @@ class Right < ActiveRecord::Base
     def restricted_rights_with_group
       rights = []
       @@restricted_by_right_groups.each_pair do |klass, group|
-        rights += klass.all.map(&:right).each do |right|
+        rights += klass.all(:include => :right).map(&:right).each do |right|
           right.group = group
         end
       end
