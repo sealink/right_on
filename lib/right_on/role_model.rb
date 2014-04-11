@@ -2,7 +2,7 @@ module RightOn
   module RoleModel
     def self.included(base)
       base.module_eval "has_and_belongs_to_many :roles"
-      Role.module_eval "has_and_belongs_to_many base.table_name"
+      Role.module_eval "has_and_belongs_to_many :#{base.table_name}"
     end
 
     def roles_allowed_to_assign
