@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency('activerecord', [">= 2.0.0", "< 4.0.0"])
+  spec.add_dependency('activerecord', [">= 2.0.0", "< 5.0.0"])
   spec.add_dependency('dependent_restrict', [">= 0.0.5"])
   spec.add_dependency('input_reader', ["~> 0.0"])
   spec.add_development_dependency "bundler", "~> 1.3"

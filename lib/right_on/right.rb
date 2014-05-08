@@ -22,7 +22,7 @@ class Right < ActiveRecord::Base
 
     def associate_group(klass, group)
       @@restricted_by_right_groups[klass] = group
-      has_one klass.table_name.singularize, :dependent => :restrict
+      has_one klass.table_name.singularize.to_sym, :dependent => :restrict
     end
 
     def associated_groups
