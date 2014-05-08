@@ -3,7 +3,7 @@ module RightOn
 
   require 'active_record'
 
-  require 'dependent_protect'
+  require 'dependent_restrict'
   require 'right_on/restricted_by_right'
   ActiveRecord::Base.send(:include, RestrictedByRight)
 
