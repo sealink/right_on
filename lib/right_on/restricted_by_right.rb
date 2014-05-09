@@ -30,7 +30,16 @@ module RestrictedByRight
     private
 
       def create_access_right!
-        self.right = Right.find_or_create_by_name(:name => "#{self.class.name.titleize}: #{name}")
+        right_name = "#{self.class.name.titleize}: #{name}"
+        self.right = find_right(right_name) || Right.create!(:name => right_name)
+      end
+
+      def find_right(name)
+        if Right.respond_to? :find_by
+          Right.find_by(:name => name)
+        else
+          Right.find_by_name(name)
+        end
       end
 
       def destroy_access_right!

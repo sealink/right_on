@@ -142,3 +142,16 @@ describe Right, "with the same name" do
   end
 end
 
+describe Role, "can have many rights" do
+  before do
+    @r1 = Right.create!(:name => 'right 1')
+    @r2 = Right.create!(:name => 'right 2')
+    @d1 = Role.create!(:title => 'role 1')
+    @d1.rights = [@r1, @r2]
+  end
+
+  it "should have and belong to many" do
+    @d1.rights.size.should == 2
+    @r1.roles.size.should == 1
+  end
+end

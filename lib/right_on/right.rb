@@ -1,7 +1,8 @@
 require 'active_record'
 class Right < ActiveRecord::Base
 
-  has_and_belongs_to_many :roles
+  has_many :right_assignments
+  has_many :roles, :through => :right_assignments
 
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -73,11 +74,19 @@ class Right < ActiveRecord::Base
     def restricted_rights_with_group
       rights = []
       @@restricted_by_right_groups.each_pair do |klass, group|
-        rights += klass.all(:include => :right).map(&:right).each do |right|
+        rights += all_rights(klass).map(&:right).each do |right|
           right.group = group
         end
       end
       rights
+    end
+
+    def all_rights(klass)
+      if klass.respond_to? :includes
+        klass.includes(:right).all
+      else
+        klass.all(:include => :right)
+      end
     end
   end
 

@@ -5,6 +5,7 @@ module RightOn
 
   require 'dependent_restrict'
   require 'right_on/restricted_by_right'
+  require 'right_on/right_assignment'
   ActiveRecord::Base.send(:include, RestrictedByRight)
 
   begin
