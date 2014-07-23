@@ -29,32 +29,32 @@ describe Right do
   end
 
   it 'should display nicely with sensible_name and to_s' do
-    @model.right.to_s.should == 'Model: Test'
-    @other.to_s.should == 'models'
-    @index.to_s.should == 'models#index'
+    expect(@model.right.to_s).to eq 'Model: Test'
+    expect(@other.to_s).to eq 'models'
+    expect(@index.to_s).to eq 'models#index'
 
-    @model.right.sensible_name.should == 'Model: Test'
-    @other.sensible_name.should == 'Models'
-    @index.sensible_name.should == 'Models - Index'
+    expect(@model.right.sensible_name).to eq 'Model: Test'
+    expect(@other.sensible_name).to eq 'Models'
+    expect(@index.sensible_name).to eq 'Models - Index'
   end
 
   it 'should create right for restricted right' do
     right = @model.right
-    right.should_not be_nil
-    right.name.should == 'Model: Test'
+    expect(right).to_not be_nil
+    expect(right.name).to eq 'Model: Test'
     expect{right.destroy}.to raise_error(ActiveRecord::DetailedDeleteRestrictionError)
   end
 
   it 'should identify correct groups' do
     rights = Right.regular_rights_with_group.sort_by{|r| r.name} # Sort for ruby 1.9 compatibility
-    rights.map(&:name).should == %w(models models#change models#index models#view users)
-    rights.map(&:group).should == %w(general general general general admin)
+    expect(rights.map(&:name)).to eq %w(models models#change models#index models#view users)
+    expect(rights.map(&:group)).to eq %w(general general general general admin)
 
-    Right.by_groups.should == {
+    expect(Right.by_groups).to eq(
       'general' => [@other, @index, @view, @change],
       'admin' => [@users],
       'other' => [@model.right]
-    }
+    )
   end
 
   it 'should determine if it is allowed based on context' do
@@ -62,34 +62,34 @@ describe Right do
     edit_action  = {:controller => 'models', :action => 'edit'}
     hello_action = {:controller => 'models', :action => 'hello'}
 
-    @model.right.allowed?(index_action).should be_false
+    expect(@model.right.allowed?(index_action)).to eq false
 
-    @users.allowed?(:controller => 'users', :action => 'index').should be_true
-    @users.allowed?(:controller => 'users', :action => 'edit' ).should be_true
-    @users.allowed?(:controller => 'users', :action => 'hello').should be_true
+    expect(@users.allowed?(:controller => 'users', :action => 'index')).to eq true
+    expect(@users.allowed?(:controller => 'users', :action => 'edit' )).to eq true
+    expect(@users.allowed?(:controller => 'users', :action => 'hello')).to eq true
 
-    @other.allowed?(index_action).should be_false # as specific action exists
-    @other.allowed?(edit_action ).should be_false # as specific action exists
-    @other.allowed?(hello_action).should be_true # as hello isn't defined
+    expect(@other.allowed?(index_action)).to eq false # as specific action exists
+    expect(@other.allowed?(edit_action )).to eq false # as specific action exists
+    expect(@other.allowed?(hello_action)).to eq true # as hello isn't defined
 
-    @index.allowed?(index_action).should be_true
-    @index.allowed?(edit_action ).should be_false
-    @index.allowed?(hello_action).should be_false
+    expect(@index.allowed?(index_action)).to eq true
+    expect(@index.allowed?(edit_action )).to eq false
+    expect(@index.allowed?(hello_action)).to eq false
 
-    @view.allowed?(index_action).should be_true
-    @view.allowed?(edit_action ).should be_false
-    @view.allowed?(hello_action).should be_false
+    expect(@view.allowed?(index_action)).to eq true
+    expect(@view.allowed?(edit_action )).to eq false
+    expect(@view.allowed?(hello_action)).to eq false
 
-    @change.allowed?(index_action).should be_true
-    @change.allowed?(edit_action ).should be_true
-    @change.allowed?(hello_action).should be_false
+    expect(@change.allowed?(index_action)).to eq true
+    expect(@change.allowed?(edit_action )).to eq true
+    expect(@change.allowed?(hello_action)).to eq false
   end
 end
 
 describe Right, "when created" do
   it "should validate presence of name" do
     subject.valid?
-    subject.errors[:name].should_not be_blank
+    expect(subject.errors[:name]).to_not be_blank
   end
 end
 
@@ -100,9 +100,9 @@ describe Right, "with a name and controller" do
   end
   
   it "should create a new right" do
-    @new_right.name.should == "tickets"
-    @new_right.controller.should == "tickets"
-    @new_right.save.should be_true
+    expect(@new_right.name).to eq "tickets"
+    expect(@new_right.controller).to eq "tickets"
+    expect(@new_right.save).to eq true
   end
   
 end
@@ -113,10 +113,10 @@ describe Right, "with a name, controller and action" do
   end
    
   it "should create a new right" do
-    @new_right.name.should == "tickets@destroy"
-    @new_right.controller.should == "tickets"
-    @new_right.action.should == "destroy"
-    @new_right.save.should be_true
+    expect(@new_right.name).to eq "tickets@destroy"
+    expect(@new_right.controller).to eq "tickets"
+    expect(@new_right.action).to eq "destroy"
+    expect(@new_right.save).to eq true
   end
 end
 
@@ -126,7 +126,7 @@ describe Right, "with only a name" do
   end
 
   it "should create a new right" do
-    @new_right.save.should be_true
+    expect(@new_right.save).to eq true
   end
 end
 
@@ -138,7 +138,7 @@ describe Right, "with the same name" do
   end
 
   it "should not create a new right" do
-    @new_right.save.should be_false
+    expect(@new_right.save).to eq false
   end
 end
 
@@ -151,7 +151,7 @@ describe Role, "can have many rights" do
   end
 
   it "should have and belong to many" do
-    @d1.rights.size.should == 2
-    @r1.roles.size.should == 1
+    expect(@d1.rights.size).to eq 2
+    expect(@r1.roles.size).to eq 1
   end
 end
