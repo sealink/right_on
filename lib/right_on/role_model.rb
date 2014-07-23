@@ -10,11 +10,15 @@ module RightOn
     end
 
     def rights
-      @rights ||= Right.all(
-        :select => "distinct rights.*",
-        :joins => :roles,
-        :conditions => ["rights_roles.role_id IN (?)", role_ids]
-      )
+      @rights ||= if ::ActiveRecord::VERSION::MAJOR >= 3
+        Right.select('distinct rights.*').joins(:roles).where('rights_roles.role_id IN (?)', role_ids)
+      else
+        Right.all(
+          :select => "distinct rights.*",
+          :joins => :roles,
+          :conditions => ["rights_roles.role_id IN (?)", role_ids]
+        )
+      end
     end
 
     def has_access_to?(client_type)
