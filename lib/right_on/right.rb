@@ -163,11 +163,15 @@ class Right < ActiveRecord::Base
 
   attr_accessor :rights
   def self.[](name)
-    @rights = cache.read('Right.all') ||
-      (right_cache = Hash[Right.all.map{|r|[r.name, r.id]}]) &&
-      cache.write('Right.all', right_cache) &&
-      right_cache
+    @rights = cache.read('Right.all') || calculate_and_write_cache
     @rights[name]
+  end
+
+  private
+  def self.calculate_and_write_cache
+    right_cache = Hash[Right.all.map{|r|[r.name, r.id]}]
+    cache.write('Right.all', right_cache) or raise RuntimeError, "Could not cache rights"
+    right_cache
   end
 
 end
