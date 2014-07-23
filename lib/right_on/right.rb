@@ -99,16 +99,15 @@ class Right < ActiveRecord::Base
   # The context tells us the state of the request being made.
 
   def allowed?(context={})
-    if controller == context[:controller]
-      if action
-        action_permitted?(context[:action])
-      else
-        # right without action works if no specific right exists
-        # e.g. can't edit if there's a edit or change right defined
-        # as you must used that specific right
-        specific_rights = Array(APPLICABLE_RIGHTS[context[:action].to_sym]) + [context[:action]]
-        specific_rights.all?{|action| Right["#{context[:controller]}##{action}"].nil?}
-      end
+    return false unless controller == context[:controller]
+    if action
+      action_permitted?(context[:action])
+    else
+      # right without action works if no specific right exists
+      # e.g. can't edit if there's a edit or change right defined
+      # as you must used that specific right
+      specific_rights = Array(APPLICABLE_RIGHTS[context[:action].to_sym]) + [context[:action]]
+      specific_rights.all?{|action| Right["#{context[:controller]}##{action}"].nil?}
     end
   end
 
