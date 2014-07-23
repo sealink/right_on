@@ -14,6 +14,26 @@ class Model < ActiveRecord::Base
   restricted_by_right
 end
 
+class User < ActiveRecord::Base
+  include RightOn::RoleModel
+end
+
+describe User do
+  before do
+    basic_right = Right.create!(:name => 'basic', :controller => 'basic')
+    admin_right = Right.create!(:name => 'admin', :controller => 'admin')
+    basic_role = Role.create!(:title => 'Basic', :rights => [basic_right])
+    admin_role = Role.create!(:title => 'Admin', :rights => [admin_right])
+    @basic_user = User.create!(:roles => [basic_role])
+    @admin_user = User.create!(:roles => [basic_role, admin_role])
+  end
+
+  it 'should compare privileges' do
+    expect(@admin_user.has_privileges_of?(@basic_user)).to eq true
+    expect(@basic_user.has_privileges_of?(@admin_user)).to eq false
+  end
+end
+
 describe Right do
   before do
     Right.delete_all

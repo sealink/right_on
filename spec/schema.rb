@@ -32,5 +32,13 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string  :name
     t.integer :right_id
   end
+
+  create_table :users do |t|
+    t.string :name
+  end
+
+  create_table :roles_users do |t|
+    t.integer :role_id, :user_id
+  end
 end
 

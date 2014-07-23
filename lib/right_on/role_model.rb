@@ -29,5 +29,9 @@ module RightOn
       right = right_or_string.is_a?(Right) ? right_or_string : Right.find_by_name(right_or_string)
       rights.include?(right)
     end
+
+    def has_privileges_of?(other_user)
+      (other_user.rights - rights).empty?
+    end
   end
 end
