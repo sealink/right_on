@@ -2,8 +2,10 @@ Right On
 ========
 
 [![Build Status](https://travis-ci.org/sealink/right_on.png?branch=master)](https://travis-ci.org/sealink/right_on)
-[![Build Status](https://gemnasium.com/sealink/right_on.png?travis)](https://gemnasium.com/sealink/right_on)
-[![Build Status](https://codeclimate.com/github/sealink/right_on.png)](https://codeclimate.com/github/sealink/right_on)
+[![Coverage Status](https://coveralls.io/repos/sealink/right_on/badge.png)](https://coveralls.io/r/sealink/right_on)
+[![Dependency Status](https://gemnasium.com/sealink/right_on.png?travis)](https://gemnasium.com/sealink/right_on)
+[![Code Climate](https://codeclimate.com/github/sealink/right_on.png)](https://codeclimate.com/github/sealink/right_on)
+
 
 # DESCRIPTION
 
