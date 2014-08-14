@@ -92,7 +92,7 @@ class RightsManager
       end
 
       options[:bootstrap_roles].each do |role_title|
-        (right_roles['roles'][role_title] || []) << [options[:controller].presence,options[:action].presence].compact.join("@")
+        (right_roles['roles'][role_title] || []) << [options[:controller].presence,options[:action].presence].compact.join("#")
       end
 
       File.open(right_roles_yaml_path, "w") do |f|
