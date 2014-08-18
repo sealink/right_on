@@ -1,8 +1,7 @@
 require 'active_record'
 class Right < ActiveRecord::Base
 
-  has_many :right_assignments
-  has_many :roles, :through => :right_assignments
+  has_and_belongs_to_many :roles
 
   validates_presence_of :name
   validates_uniqueness_of :name
