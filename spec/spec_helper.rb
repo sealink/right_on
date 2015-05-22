@@ -8,9 +8,9 @@
 require 'rubygems'
 require 'bundler/setup'
 
-MINIMUM_COVERAGE = 64
+MINIMUM_COVERAGE = 63
 
-if ENV['COVERAGE']
+unless ENV['COVERAGE'] == 'off'
   require 'simplecov'
   require 'simplecov-rcov'
   require 'coveralls'
