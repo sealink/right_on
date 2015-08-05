@@ -7,7 +7,7 @@ class Right < ActiveRecord::Base
   validates_uniqueness_of :name
 
   if ::Rails.version > '3'
-    scope :ordered, order(:name)
+    scope :ordered, -> { order :name }
   else
     named_scope :ordered, :order => 'name'
   end
