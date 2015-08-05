@@ -1,7 +1,7 @@
 ActiveRecord::Schema.define(:version => 1) do
   create_table :rights do |t|
     t.string   :name, :controller, :action, :limit => 150
-    t.timestamps
+    t.timestamps null: true
   end
 
   change_table :rights do |t|
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string  :title
     t.text    :description
     t.integer :right_id
-    t.timestamps
+    t.timestamps null: true
   end
 
   add_index :roles, :right_id
