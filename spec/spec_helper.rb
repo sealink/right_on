@@ -8,6 +8,8 @@
 require 'rubygems'
 require 'bundler/setup'
 
+require 'support/bootstrap'
+
 MINIMUM_COVERAGE = 63
 
 unless ENV['COVERAGE'] == 'off'

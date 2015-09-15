@@ -19,18 +19,16 @@ class User < ActiveRecord::Base
 end
 
 describe User do
+  let(:basic_user) { User.where(name: 'basic').first }
+  let(:admin_user) { User.where(name: 'admin').first }
+
   before do
-    basic_right = Right.create!(:name => 'basic', :controller => 'basic')
-    admin_right = Right.create!(:name => 'admin', :controller => 'admin')
-    basic_role = Role.create!(:title => 'Basic', :rights => [basic_right])
-    admin_role = Role.create!(:title => 'Admin', :rights => [admin_right])
-    @basic_user = User.create!(:roles => [basic_role])
-    @admin_user = User.create!(:roles => [basic_role, admin_role])
+    Bootstrap.reset_database
   end
 
   it 'should compare privileges' do
-    expect(@admin_user.has_privileges_of?(@basic_user)).to eq true
-    expect(@basic_user.has_privileges_of?(@admin_user)).to eq false
+    expect(admin_user.has_privileges_of?(basic_user)).to eq true
+    expect(basic_user.has_privileges_of?(admin_user)).to eq false
   end
 end
 
