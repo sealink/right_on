@@ -4,7 +4,7 @@ module RightOn
 
     def self.included(base)
       base.module_eval do
-        helper_method :access_allowed?
+        helper_method :access_allowed?, :access_allowed_to_controller?
         class_attribute :rights_from
         class_attribute :permission_denied_layout
       end
