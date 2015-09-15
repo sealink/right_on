@@ -173,3 +173,38 @@ describe Role, "can have many rights" do
     expect(@r1.roles.size).to eq 1
   end
 end
+
+describe 'when checking accessibility to a controller' do
+
+  let(:test_controller_right) { Right.new(name: 'test', controller: 'test') }
+  let(:user) { double(rights: [test_controller_right]) }
+  let(:controller) { 'test' }
+  let(:action) { 'index' }
+  let(:params) { {controller: 'test', action: 'index'} }
+
+  before do
+    stub_const 'TestController', double(current_user: user, params: params)
+    TestController.extend RightOn::ActionControllerExtensions
+    allow(TestController).to receive(:rights_from).and_return(nil)
+  end
+
+  specify { expect(TestController.access_allowed?(controller)).to be_truthy }
+  specify { expect(TestController.access_allowed?('other')).to be_falsey }
+  specify { expect(TestController.access_allowed_to_controller?(controller)).to be_truthy }
+  specify { expect(TestController.access_allowed_to_controller?('other')).to be_falsey }
+
+  describe 'when inheriting rights' do
+    let(:controller) { 'test_inherited' }
+
+    before do
+      stub_const 'TestInheritedController', double(current_user: user, params: params)
+      TestInheritedController.extend RightOn::ActionControllerExtensions
+      allow(TestInheritedController).to receive(:rights_from).and_return(:test)
+    end
+
+    specify { expect(TestInheritedController.access_allowed?(controller)).to be_falsey }
+    specify { expect(TestInheritedController.access_allowed?('other')).to be_falsey }
+    specify { expect(TestInheritedController.access_allowed_to_controller?(controller)).to be_truthy }
+    specify { expect(TestInheritedController.access_allowed_to_controller?('other')).to be_falsey }
+  end
+end
