@@ -15,6 +15,18 @@ module RightOn
       access_allowed?(controller_action_options) || permission_denied
     end
 
+    # Checks the access privilege for a controller
+    def access_allowed_to_controller?(controller)
+      controller_class = "#{controller.to_s.camelcase}Controller".safe_constantize
+
+      # Handle inheritance of rights
+      if controller_class && controller_class.rights_from.present?
+        controller = controller_class.rights_from.to_s
+      end
+
+      access_allowed?(controller)
+    end
+
     # Checks the access privilege of the user and returns true or false
     def access_allowed?(opts={})
       if opts.is_a?(String)
