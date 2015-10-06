@@ -54,8 +54,9 @@ class Right < ActiveRecord::Base
           else right_name.is_a?(Hash) # controller + actions
             controller, actions = right_name.first
             r = rights_by_name[controller]
-            raise right_name.inspect if r.nil?
-            rights_for_group << r
+            if r
+              rights_for_group << r
+            end
             actions.each do |action|
               name = "#{controller}##{action}"
               r = rights_by_name[name]
