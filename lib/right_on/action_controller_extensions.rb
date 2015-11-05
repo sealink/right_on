@@ -45,16 +45,16 @@ module RightOn
       @controller_name = params[:controller] unless @right_allowed
 
       respond_to do |format|
-        format.html { render :status => 550, :template => 'permission_denied', :layout => (permission_denied_layout || false) }
+        format.html { render status: 401, template: 'permission_denied', layout: (permission_denied_layout || false) }
         format.json do
-          render :status => 550, :json => {
-            :error => 'Permission Denied',
-            :right_allowed => @right_allowed.try(:name) || 'No right assigned for this action. Please contact your system administrator',
-            :roles_for_right => @roles_allowed ? @roles_allowed.map(&:title) : 'N/A (as no right is assigned for this action)'
+          render status: 401, json: {
+            error: 'Permission Denied',
+            right_allowed: @right_allowed.try(:name) || 'No right assigned for this action. Please contact your system administrator',
+            roles_for_right: @roles_allowed ? @roles_allowed.map(&:title) : 'N/A (as no right is assigned for this action)'
           }
         end
         format.js do
-          render :update, :status => 550 do |page|
+          render :update, status: 401 do |page|
             msg = if @right_allowed
               <<-MESSAGE
 You are not authorised to perform the requested operation.
