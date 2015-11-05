@@ -40,35 +40,16 @@ module RightOn
 
     # Called if a security check determines permission is denied
     def permission_denied
-      @right_allowed = Right.all.detect{|right| right.allowed?(controller_action_options)}
-      @roles_allowed = @right_allowed.roles if @right_allowed
-      @controller_name = params[:controller] unless @right_allowed
+      @permission_denied_response = PermissionDeniedResponse.new(params, controller_action_options)
 
       respond_to do |format|
         format.html { render status: 401, template: 'permission_denied', layout: (permission_denied_layout || false) }
         format.json do
-          render status: 401, json: {
-            error: 'Permission Denied',
-            right_allowed: @right_allowed.try(:name) || 'No right assigned for this action. Please contact your system administrator',
-            roles_for_right: @roles_allowed ? @roles_allowed.map(&:title) : 'N/A (as no right is assigned for this action)'
-          }
+          render status: 401, json: @permission_denied_response.to_json
         end
         format.js do
           render :update, status: 401 do |page|
-            msg = if @right_allowed
-              <<-MESSAGE
-You are not authorised to perform the requested operation.
-Right required: #{@right_allowed}
-This right is given to the following roles: #{@roles_allowed.map(&:title).join(", ")}.
-Contact your system manager to be given this right.
-MESSAGE
-            else
-              <<-MESSAGE
-No right is defined for this page: #{@controller_name}
-Contact your system manager to notify this problem.
-MESSAGE
-            end
-            page.alert(msg)
+            page.alert(@permission_denied_layout.text_message)
           end
         end
       end
