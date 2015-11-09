@@ -40,7 +40,7 @@ module RightOn
 
     # Called if a security check determines permission is denied
     def permission_denied
-      @permission_denied_response = PermissionDeniedResponse.new(params, controller_action_options)
+      @permission_denied_response = RightOn::PermissionDeniedResponse.new(params, controller_action_options)
 
       respond_to do |format|
         format.html { render status: 401, template: 'permission_denied', layout: (permission_denied_layout || false) }

@@ -1,23 +1,5 @@
 require 'spec_helper'
 
-DB_FILE = 'tmp/test_db'
-FileUtils.mkdir_p File.dirname(DB_FILE)
-FileUtils.rm_f DB_FILE
-
-ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database => DB_FILE
-
-load('spec/schema.rb')
-
-Right.rights_yaml 'db/rights_roles.yml'
-
-class Model < ActiveRecord::Base
-  restricted_by_right
-end
-
-class User < ActiveRecord::Base
-  include RightOn::RoleModel
-end
-
 require 'action_controller'
 class AdminController < ActionController::Base
   include RightOn::ActionControllerExtensions
