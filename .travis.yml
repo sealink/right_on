@@ -6,8 +6,7 @@ rvm:
 script: "bundle exec rake coverage"
 gemfile:
   - gemfiles/rails3.gemfile
-  - gemfiles/rails4_0.gemfile
-  - gemfiles/rails4_1.gemfile
+  - gemfiles/rails4.gemfile
 notifications:
   email:
     - support@travellink.com.au
