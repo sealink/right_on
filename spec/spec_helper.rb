@@ -9,7 +9,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 require 'support/bootstrap'
-require 'support/coverage'
+require 'support/coverage_loader'
 
 require 'right_on'
 require 'right_on/rails'
