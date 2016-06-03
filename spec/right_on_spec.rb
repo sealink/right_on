@@ -14,18 +14,18 @@ describe User do
   end
 end
 
-describe Right do
+describe RightOn::Right do
   before do
-    Right.delete_all
+    RightOn::Right.delete_all
     Model.delete_all
 
     @model = Model.create!(:name => 'Test')
 
-    @users = Right.create!(:name => 'users', :controller => 'users')
-    @other = Right.create!(:name => 'models', :controller => 'models')
-    @index = Right.create!(:name => 'models#index', :controller => 'models', :action => 'index')
-    @change = Right.create!(:name => 'models#change', :controller => 'models', :action => 'change')
-    @view = Right.create!(:name => 'models#view', :controller => 'models', :action => 'view')
+    @users  = RightOn::Right.create!(:name => 'users', :controller => 'users')
+    @other  = RightOn::Right.create!(:name => 'models', :controller => 'models')
+    @index  = RightOn::Right.create!(:name => 'models#index', :controller => 'models', :action => 'index')
+    @change = RightOn::Right.create!(:name => 'models#change', :controller => 'models', :action => 'change')
+    @view   = RightOn::Right.create!(:name => 'models#view', :controller => 'models', :action => 'view')
   end
 
   it 'should display nicely with sensible_name and to_s' do
@@ -46,11 +46,11 @@ describe Right do
   end
 
   it 'should identify correct groups' do
-    rights = Right.regular_rights_with_group.sort_by{|r| r.name} # Sort for ruby 1.9 compatibility
+    rights = RightOn::Right.regular_rights_with_group.sort_by{|r| r.name} # Sort for ruby 1.9 compatibility
     expect(rights.map(&:name)).to eq %w(models models#change models#index models#view users)
     expect(rights.map(&:group)).to eq %w(general general general general admin)
 
-    expect(Right.by_groups).to eq(
+    expect(RightOn::Right.by_groups).to eq(
       'general' => [@other, @index, @view, @change],
       'admin' => [@users],
       'other' => [@model.right]
@@ -86,32 +86,32 @@ describe Right do
   end
 end
 
-describe Right, "when created" do
+describe RightOn::Right, "when created" do
   it "should validate presence of name" do
     subject.valid?
     expect(subject.errors[:name]).to_not be_blank
   end
 end
 
-describe Right, "with a name and controller" do
+describe RightOn::Right, "with a name and controller" do
   before do
-    @new_right = Right.new(:name => "tickets", :controller => "tickets")
+    @new_right = RightOn::Right.new(:name => "tickets", :controller => "tickets")
     @new_right.save!
   end
-  
+
   it "should create a new right" do
     expect(@new_right.name).to eq "tickets"
     expect(@new_right.controller).to eq "tickets"
     expect(@new_right.save).to eq true
   end
-  
+
 end
 
-describe Right, "with a name, controller and action" do
+describe RightOn::Right, "with a name, controller and action" do
   before do
-    @new_right = Right.new(:name => "tickets@destroy", :controller => "tickets", :action => "destroy")
+    @new_right = RightOn::Right.new(:name => "tickets@destroy", :controller => "tickets", :action => "destroy")
   end
-   
+
   it "should create a new right" do
     expect(@new_right.name).to eq "tickets@destroy"
     expect(@new_right.controller).to eq "tickets"
@@ -120,9 +120,9 @@ describe Right, "with a name, controller and action" do
   end
 end
 
-describe Right, "with only a name" do
+describe RightOn::Right, "with only a name" do
   before do
-    @new_right = Right.new(:name => "tickets2")
+    @new_right = RightOn::Right.new(:name => "tickets2")
   end
 
   it "should create a new right" do
@@ -130,11 +130,11 @@ describe Right, "with only a name" do
   end
 end
 
-describe Right, "with the same name" do
+describe RightOn::Right, "with the same name" do
   before do
-    @old_right = Right.new(:name => "tickets3", :controller => "tickets")
+    @old_right = RightOn::Right.new(:name => "tickets3", :controller => "tickets")
     @old_right.save!
-    @new_right = Right.new(:name => "tickets3", :controller => "tickets")
+    @new_right = RightOn::Right.new(:name => "tickets3", :controller => "tickets")
   end
 
   it "should not create a new right" do
@@ -142,11 +142,11 @@ describe Right, "with the same name" do
   end
 end
 
-describe Role, "can have many rights" do
+describe RightOn::Role, "can have many rights" do
   before do
-    @r1 = Right.create!(:name => 'right 1')
-    @r2 = Right.create!(:name => 'right 2')
-    @d1 = Role.create!(:title => 'role 1')
+    @r1 = RightOn::Right.create!(:name => 'right 1')
+    @r2 = RightOn::Right.create!(:name => 'right 2')
+    @d1 = RightOn::Role.create!(:title => 'role 1')
     @d1.rights = [@r1, @r2]
   end
 
@@ -158,7 +158,7 @@ end
 
 describe 'when checking accessibility to a controller' do
 
-  let(:test_controller_right) { Right.new(name: 'test', controller: 'test') }
+  let(:test_controller_right) { RightOn::Right.new(name: 'test', controller: 'test') }
   let(:user) { double(rights: [test_controller_right]) }
   let(:controller) { 'test' }
   let(:action) { 'index' }

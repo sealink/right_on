@@ -18,7 +18,7 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
   config.before :all do
-    Right.cache = ActiveSupport::Cache::MemoryStore.new
+    RightOn::Right.cache = ActiveSupport::Cache::MemoryStore.new
   end
 end
 
@@ -30,7 +30,7 @@ ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database => DB_F
 
 load('spec/schema.rb')
 
-Right.rights_yaml 'db/rights_roles.yml'
+RightOn::Right.rights_yaml 'db/rights_roles.yml'
 
 class Model < ActiveRecord::Base
   restricted_by_right

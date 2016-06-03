@@ -13,10 +13,10 @@ namespace "db" do
         message << "Every roles will lose their existing rights unless specified in db/fixtures/rights_roles.yml"
 
         RakeUserInterface.confirmation_required(message) do
-          Right.transaction do
-            if Right.count > 0
+          RightOn::Right.transaction do
+            if RightOn::Right.count > 0
               puts "Removing existing Right data..."
-              Right.destroy_all
+              RightOn::Right.destroy_all
             end
 
             Rake::Task["db:seed:rights"].invoke
