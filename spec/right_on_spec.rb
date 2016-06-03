@@ -166,7 +166,7 @@ describe 'when checking accessibility to a controller' do
 
   before do
     stub_const 'TestController', double(current_user: user, params: params)
-    TestController.extend RightOn::RightOn::ActionControllerExtensions
+    TestController.extend RightOn::ActionControllerExtensions
     allow(TestController).to receive(:rights_from).and_return(nil)
   end
 
@@ -180,7 +180,7 @@ describe 'when checking accessibility to a controller' do
 
     before do
       stub_const 'TestInheritedController', double(current_user: user, params: params)
-      TestInheritedController.extend RightOn::RightOn::ActionControllerExtensions
+      TestInheritedController.extend RightOn::ActionControllerExtensions
       allow(TestInheritedController).to receive(:rights_from).and_return(:test)
     end
 
