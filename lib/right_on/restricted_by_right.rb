@@ -43,11 +43,7 @@ module RightOn
         end
 
         def find_right(name)
-          if Right.respond_to? :find_by
-            Right.find_by(:name => name)
-          else
-            Right.find_by_name(name)
-          end
+          Right.find_by(:name => name)
         end
 
         def destroy_access_right!

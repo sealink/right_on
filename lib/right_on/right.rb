@@ -8,11 +8,7 @@ module RightOn
     validates_presence_of :name
     validates_uniqueness_of :name
 
-    if ::Rails.version > '3'
-      scope :ordered, -> { order :name }
-    else
-      named_scope :ordered, :order => 'name'
-    end
+    scope :ordered, -> { order :name }
 
     after_save :clear_cache
     after_destroy :clear_cache
@@ -84,11 +80,7 @@ module RightOn
       end
 
       def all_rights(klass)
-        if klass.respond_to? :includes
-          klass.includes(:right).all
-        else
-          klass.all(:include => :right)
-        end
+        klass.includes(:right).all
       end
     end
 
