@@ -8,8 +8,12 @@ module RightOn
     module ClassMethods
       def restricted_by_right(options = {})
         options ||= {}
-        options[:group] ||= 'other'
-        Right.associate_group(self, options[:group])
+        group = options.fetch(:group, 'other')
+
+        @right_on_config ||= {}
+        @right_on_config[:restricted_by_right_group] = group
+
+        Right.associate_group(self, group)
 
         class << self
           def accessible_to(user)
@@ -24,6 +28,9 @@ module RightOn
         after_destroy :destroy_access_right!
       end
 
+      def restricted_by_right_group
+        (@right_on_config || {})[:restricted_by_right_group]
+      end
     end
 
     module InstanceMethods
