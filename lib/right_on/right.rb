@@ -27,10 +27,6 @@ module RightOn
         has_one klass.table_name.singularize.to_sym, :dependent => :restrict
       end
 
-      def associated_groups
-        @@restricted_by_right_groups
-      end
-
       def rights_yaml(file_path)
         @@rights_yaml = file_path
       end
