@@ -143,16 +143,30 @@ describe RightOn::Right, "with the same name" do
 end
 
 describe RightOn::Role, "can have many rights" do
-  before do
-    @r1 = RightOn::Right.create!(:name => 'right 1')
-    @r2 = RightOn::Right.create!(:name => 'right 2')
-    @d1 = RightOn::Role.create!(:title => 'role 1')
-    @d1.rights = [@r1, @r2]
-  end
+  let(:role1) { RightOn::Role.new(:title => 'role 1') }
 
-  it "should have and belong to many" do
-    expect(@d1.rights.size).to eq 2
-    expect(@r1.roles.size).to eq 1
+  specify { expect(role1.to_s).to eq 'Role 1' }
+
+  context 'when assigned rights' do
+    let(:right1) { RightOn::Right.create!(:name => 'right 1') }
+    let(:right2) { RightOn::Right.create!(:name => 'right 2') }
+
+    before do
+      role1.save!
+      role1.rights = [right1, right2]
+    end
+
+    after do
+      role1.destroy
+      right1.destroy
+      right2.destroy
+    end
+
+    it "should have and belong to many" do
+      expect(role1.rights.size).to eq 2
+      expect(right1.roles.size).to eq 1
+      expect(right2.roles.size).to eq 1
+    end
   end
 end
 
