@@ -8,11 +8,7 @@ module RightOn
     validates_presence_of :name
     validates_uniqueness_of :name
 
-    if ::Rails.version > '3'
-      scope :ordered, -> { order :name }
-    else
-      named_scope :ordered, :order => 'name'
-    end
+    scope :ordered, -> { order :name }
 
     after_save :clear_cache
     after_destroy :clear_cache
@@ -20,15 +16,14 @@ module RightOn
     attr_accessor :group
 
     class << self
-      @@restricted_by_right_groups = {}
+      @@restricted_by_right_classes = []
 
       def associate_group(klass, group)
-        @@restricted_by_right_groups[klass] = group
+        # Prevent issues when reloading class using restricted_by_right
+        unless @@restricted_by_right_classes.include?(klass)
+          @@restricted_by_right_classes << klass
+        end
         has_one klass.table_name.singularize.to_sym, :dependent => :restrict
-      end
-
-      def associated_groups
-        @@restricted_by_right_groups
       end
 
       def rights_yaml(file_path)
@@ -75,7 +70,8 @@ module RightOn
 
       def restricted_rights_with_group
         rights = []
-        @@restricted_by_right_groups.each_pair do |klass, group|
+        @@restricted_by_right_classes.each do |klass|
+          group = klass.restricted_by_right_group
           rights += all_rights(klass).map(&:right).each do |right|
             right.group = group
           end
@@ -84,11 +80,7 @@ module RightOn
       end
 
       def all_rights(klass)
-        if klass.respond_to? :includes
-          klass.includes(:right).all
-        else
-          klass.all(:include => :right)
-        end
+        klass.includes(:right).all
       end
     end
 
