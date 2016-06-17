@@ -1,6 +1,11 @@
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'right_on/version'
+
 Gem::Specification.new do |spec|
   spec.name          = 'right_on'
-  spec.version       = '0.0.2'
+  spec.version       = RightOn::VERSION
   spec.authors       = ["Michael Noack", "Alessandro Berardi"]
   spec.email         = 'development@travellink.com.au'
   spec.description   = "This helps systems manage rights and roles on a controller/action basis."

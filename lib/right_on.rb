@@ -1,6 +1,4 @@
 module RightOn
-  VERSION = '0.0.1'
-
   require 'active_record'
 
   require 'dependent_restrict'
