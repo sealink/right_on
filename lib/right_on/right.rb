@@ -31,11 +31,8 @@ module RightOn
       end
 
       def by_groups
-        rights = []
-        rights += regular_rights_with_group
-        rights += restricted_rights_with_group
-        other_rights = Right.all - rights
-        rights += other_rights
+        rights = regular_rights_with_group + restricted_rights_with_group
+        rights += (Right.all - rights)
         rights.group_by(&:group)
       end
 
