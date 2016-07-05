@@ -68,14 +68,12 @@ module RightOn
       end
 
       def restricted_rights_with_group
-        rights = []
-        @@restricted_by_right_classes.each do |klass|
+        @@restricted_by_right_classes.flat_map do |klass|
           group = klass.restricted_by_right_group
-          rights += all_rights(klass).map(&:right).each do |right|
+          all_rights(klass).map(&:right).sort_by(&:name).each do |right|
             right.group = group
           end
         end
-        rights
       end
 
       def all_rights(klass)
