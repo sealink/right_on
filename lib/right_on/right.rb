@@ -35,7 +35,6 @@ module RightOn
         rights += regular_rights_with_group
         rights += restricted_rights_with_group
         other_rights = Right.all - rights
-        other_rights.each { |right| right.group = 'Groupless' }
         rights += other_rights
         rights.group_by(&:group)
       end
