@@ -23,7 +23,7 @@ module RightOn
         unless @@restricted_by_right_classes.include?(klass)
           @@restricted_by_right_classes << klass
         end
-        has_one klass.table_name.singularize.to_sym, :dependent => :restrict
+        has_one klass.table_name.singularize.to_sym, dependent: :restrict_with_exception
       end
 
       def rights_yaml(file_path)
