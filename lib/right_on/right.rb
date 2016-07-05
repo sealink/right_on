@@ -37,34 +37,43 @@ module RightOn
       end
 
       def regular_rights_with_group
-        yaml = YAML::load_file(@@rights_yaml)
-        rights = []
-        rights_by_name = Hash[Right.all.map{|r| [r.name, r]}]
-        yaml['rights'].each_pair do |group, right_names|
-          rights_for_group = []
-          right_names.each do |right_name|
-            if right_name.is_a?(String) # controller
-              r = rights_by_name[right_name]
-              raise right_name if r.nil?
-              rights_for_group << r
-            else right_name.is_a?(Hash) # controller + actions
-              controller, actions = right_name.first
-              r = rights_by_name[controller]
-              if r
-                rights_for_group << r
-              end
-              actions.each do |action|
-                name = "#{controller}##{action}"
-                r = rights_by_name[name]
-                raise name.inspect + "****" + right_name.inspect + '---' + action_right.inspect if r.nil?
-                rights_for_group << r
-              end
-            end
-          end
-          rights_for_group.each{|r| r.group = group}
-          rights += rights_for_group
+        yaml_rights.each_pair.flat_map do |group, right_names|
+          right_names
+            .flat_map { |right_name| right_name_to_rights(right_name) }
+            .each { |r| r.group = group }
         end
-        rights
+      end
+
+      def yaml_rights
+        YAML::load_file(@@rights_yaml)['rights']
+      end
+
+      def right_name_to_rights(right_name)
+        case right_name
+        when String # controller
+          [rights_by_name!(right_name)]
+        when Hash # controller + actions
+          controller, actions = right_name.first
+          controller_rights(controller) + action_rights(controller, actions)
+        end
+      end
+
+      def controller_rights(controller)
+        r = rights_by_name[controller]
+        return [] unless r
+        [r]
+      end
+
+      def action_rights(controller, actions)
+        actions.map { |action| rights_by_name!("#{controller}##{action}") }
+      end
+
+      def rights_by_name
+        @rights_by_name ||= Hash[Right.all.map{|r| [r.name, r]}]
+      end
+
+      def rights_by_name!(name)
+        rights_by_name[name] or fail name.inspect
       end
 
       def restricted_rights_with_group
