@@ -20,7 +20,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'activerecord', '>= 3.2.0'
   spec.add_dependency 'activesupport', '>= 3.2.0'
-  spec.add_dependency 'dependent_restrict', '>= 0.2.3'
   spec.add_dependency 'input_reader', '~> 0.0'
   spec.add_development_dependency 'bundler', '~> 1.3'
   spec.add_development_dependency 'rake'
