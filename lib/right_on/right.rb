@@ -59,7 +59,7 @@ module RightOn
       end
 
       def rights_by_name
-        @rights_by_name ||= Hash[Right.all.map{|r| [r.name, r]}]
+        Hash[Right.all.map{|r| [r.name, r]}]
       end
 
       def rights_by_name!(name)
