@@ -16,22 +16,12 @@ module RightOn
     attr_accessor :group
 
     class << self
-      @@restricted_by_right_classes = []
-
-      def associate_group(klass, group)
-        # Prevent issues when reloading class using restricted_by_right
-        unless @@restricted_by_right_classes.include?(klass)
-          @@restricted_by_right_classes << klass
-        end
-        has_one klass.table_name.singularize.to_sym, dependent: :restrict_with_exception
-      end
-
       def rights_yaml(file_path)
         @@rights_yaml = file_path
       end
 
       def by_groups
-        rights = regular_rights_with_group + restricted_rights_with_group
+        rights = regular_rights_with_group
         rights += (Right.all - rights)
         rights.group_by(&:group)
       end
@@ -74,19 +64,6 @@ module RightOn
 
       def rights_by_name!(name)
         rights_by_name[name] or fail name.inspect
-      end
-
-      def restricted_rights_with_group
-        @@restricted_by_right_classes.flat_map do |klass|
-          group = klass.restricted_by_right_group
-          all_rights(klass).map(&:right).sort_by(&:name).each do |right|
-            right.group = group
-          end
-        end
-      end
-
-      def all_rights(klass)
-        klass.includes(:right).all
       end
     end
 
