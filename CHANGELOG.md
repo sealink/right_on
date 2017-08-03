@@ -5,6 +5,8 @@ This changelog adheres to [Keep a CHANGELOG](http://keepachangelog.com/).
 
 ## Unreleased
 
+## 0.3.0
+
 ### Fixed
 - Caching of rights in memory (causing tenant issues)
 
