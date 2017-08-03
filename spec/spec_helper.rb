@@ -34,7 +34,6 @@ load('spec/schema.rb')
 RightOn::Right.rights_yaml 'db/rights_roles.yml'
 
 class Model < ActiveRecord::Base
-  restricted_by_right
 end
 
 class User < ActiveRecord::Base
