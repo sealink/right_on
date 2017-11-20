@@ -5,6 +5,9 @@ This changelog adheres to [Keep a CHANGELOG](http://keepachangelog.com/).
 
 ## Unreleased
 
+### Fixed
+- [TT-3352] Ensure roles currently in use cannot be deleted
+
 ## 0.3.0
 
 ### Fixed
