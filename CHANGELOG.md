@@ -7,6 +7,7 @@ This changelog adheres to [Keep a CHANGELOG](http://keepachangelog.com/).
 
 ### Fixed
 - [TT-3352] Ensure roles currently in use cannot be deleted
+- Also dropped rails 3 support due to above
 
 ## 0.3.0
 
