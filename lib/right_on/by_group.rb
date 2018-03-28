@@ -1,23 +1,24 @@
 module RightOn
   class ByGroup
+    def self.rights
+      new.by_groups
+    end
+
     def initialize
       @rights_by_name = Hash[Right.all.map{|r| [r.name, r]}]
     end
 
     def by_groups
-      rights = regular_rights_with_group
-      rights += (Right.all - rights)
-      rights.group_by(&:group)
+      yaml_rights.each_pair.with_object({}) do |(group, right_names), hash|
+        hash[group] = right_names
+          .flat_map { |right_name| right_name_to_rights(right_name) }
+      end
     end
 
     private
 
-    def regular_rights_with_group
-      RightOn::Right.yaml_rights.each_pair.flat_map do |group, right_names|
-        right_names
-          .flat_map { |right_name| right_name_to_rights(right_name) }
-          .each { |r| r.group = group }
-      end
+    def yaml_rights
+      YAML::load_file(RightOn.rights_yaml)['rights']
     end
 
     def right_name_to_rights(right_name)
