@@ -17,9 +17,6 @@ end
 describe RightOn::Right do
   before do
     RightOn::Right.delete_all
-    Model.delete_all
-
-    @model = Model.create!(:name => 'Test')
 
     @users  = RightOn::Right.create!(:name => 'users', :controller => 'users')
     @other  = RightOn::Right.create!(:name => 'models', :controller => 'models')
