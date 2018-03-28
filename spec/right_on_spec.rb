@@ -15,28 +15,26 @@ describe User do
 end
 
 describe RightOn::Right do
-  before do
-    RightOn::Right.delete_all
-
-    @users  = RightOn::Right.create!(:name => 'users', :controller => 'users')
-    @other  = RightOn::Right.create!(:name => 'models', :controller => 'models')
-    @index  = RightOn::Right.create!(:name => 'models#index', :controller => 'models', :action => 'index')
-    @change = RightOn::Right.create!(:name => 'models#change', :controller => 'models', :action => 'change')
-    @view   = RightOn::Right.create!(:name => 'models#view', :controller => 'models', :action => 'view')
-  end
+  let(:rights) { Bootstrap.various_rights_with_actions }
+  let(:users)  { rights[:users] }
+  let(:other)  { rights[:models] }
+  let(:index)  { rights[:models_index] }
+  let(:change) { rights[:models_change] }
+  let(:view)   { rights[:models_view] }
 
   it 'should display nicely with sensible_name and to_s' do
-    expect(@other.to_s).to eq 'models'
-    expect(@index.to_s).to eq 'models#index'
+    expect(other.to_s).to eq 'models'
+    expect(index.to_s).to eq 'models#index'
 
-    expect(@other.sensible_name).to eq 'Models'
-    expect(@index.sensible_name).to eq 'Models - Index'
+    expect(other.sensible_name).to eq 'Models'
+    expect(index.sensible_name).to eq 'Models - Index'
   end
 
   it 'should identify correct groups' do
+    rights # load rights
     expect(RightOn::Right.by_groups).to eq(
-      'general' => [@other, @index, @view, @change],
-      'admin' => [@users]
+      'general' => [other, index, view, change],
+      'admin' => [users]
     )
   end
 
@@ -45,25 +43,25 @@ describe RightOn::Right do
     edit_action  = {:controller => 'models', :action => 'edit'}
     hello_action = {:controller => 'models', :action => 'hello'}
 
-    expect(@users.allowed?(:controller => 'users', :action => 'index')).to eq true
-    expect(@users.allowed?(:controller => 'users', :action => 'edit' )).to eq true
-    expect(@users.allowed?(:controller => 'users', :action => 'hello')).to eq true
+    expect(users.allowed?(:controller => 'users', :action => 'index')).to eq true
+    expect(users.allowed?(:controller => 'users', :action => 'edit' )).to eq true
+    expect(users.allowed?(:controller => 'users', :action => 'hello')).to eq true
 
-    expect(@other.allowed?(index_action)).to eq false # as specific action exists
-    expect(@other.allowed?(edit_action )).to eq false # as specific action exists
-    expect(@other.allowed?(hello_action)).to eq true # as hello isn't defined
+    expect(other.allowed?(index_action)).to eq false # as specific action exists
+    expect(other.allowed?(edit_action )).to eq false # as specific action exists
+    expect(other.allowed?(hello_action)).to eq true # as hello isn't defined
 
-    expect(@index.allowed?(index_action)).to eq true
-    expect(@index.allowed?(edit_action )).to eq false
-    expect(@index.allowed?(hello_action)).to eq false
+    expect(index.allowed?(index_action)).to eq true
+    expect(index.allowed?(edit_action )).to eq false
+    expect(index.allowed?(hello_action)).to eq false
 
-    expect(@view.allowed?(index_action)).to eq true
-    expect(@view.allowed?(edit_action )).to eq false
-    expect(@view.allowed?(hello_action)).to eq false
+    expect(view.allowed?(index_action)).to eq true
+    expect(view.allowed?(edit_action )).to eq false
+    expect(view.allowed?(hello_action)).to eq false
 
-    expect(@change.allowed?(index_action)).to eq true
-    expect(@change.allowed?(edit_action )).to eq true
-    expect(@change.allowed?(hello_action)).to eq false
+    expect(change.allowed?(index_action)).to eq true
+    expect(change.allowed?(edit_action )).to eq true
+    expect(change.allowed?(hello_action)).to eq false
   end
 end
 
