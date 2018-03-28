@@ -31,8 +31,6 @@ ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database => DB_F
 
 load('spec/schema.rb')
 
-RightOn::Right.rights_yaml 'db/rights_roles.yml'
-
 class Model < ActiveRecord::Base
 end
 

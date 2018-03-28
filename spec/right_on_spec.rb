@@ -30,14 +30,6 @@ describe RightOn::Right do
     expect(index.sensible_name).to eq 'Models - Index'
   end
 
-  it 'should identify correct groups' do
-    rights # load rights
-    expect(RightOn::Right.by_groups).to eq(
-      'general' => [other, index, view, change],
-      'admin' => [users]
-    )
-  end
-
   it 'should determine if it is allowed based on context' do
     index_action = {:controller => 'models', :action => 'index'}
     edit_action  = {:controller => 'models', :action => 'edit'}
