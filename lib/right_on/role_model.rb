@@ -3,18 +3,11 @@ module RightOn
     def self.included(base)
       base.module_eval do
         has_and_belongs_to_many :roles, class_name: 'RightOn::Role'
+        has_many :rights, through: :roles, class_name: 'RightOn::Right'
       end
       Role.module_eval do
         has_and_belongs_to_many base.table_name.to_sym, dependent: :restrict
       end
-    end
-
-    def rights
-      @rights ||=
-        Right
-          .select('distinct rights.*')
-          .joins(:roles)
-          .where('rights_roles.role_id IN (?)', role_ids)
     end
 
     def has_privileges_of?(other_user)
