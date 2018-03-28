@@ -25,4 +25,9 @@ describe RightOn::RoleModel do
     expect(admin.has_privileges_of?(basic_user)).to be true
     expect(basic_user.has_privileges_of?(admin)).to be false
   end
+
+  it 'links back to users' do
+    admin # load admin
+    expect(admin_role.users.size).to eq 1
+  end
 end

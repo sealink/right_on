@@ -2,7 +2,9 @@ module RightOn
   module RoleModel
     def self.included(base)
       base.module_eval 'has_and_belongs_to_many :roles, :class_name => "RightOn::Role"'
-      Role.module_eval "has_and_belongs_to_many :#{base.table_name}, dependent: :restrict"
+      Role.module_eval do
+        has_and_belongs_to_many base.table_name.to_sym, dependent: :restrict
+      end
     end
 
     def rights
