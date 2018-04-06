@@ -31,7 +31,7 @@ module RightOn
     def access_allowed?(opts={})
       if opts.is_a?(String)
         controller, action = opts.split('#')
-        opts = {:controller => controller, :action => action}
+        opts = { controller: controller, action: action }
       end
       opts[:controller] ||= params[:controller]
       opts[:action]     ||= params[:action]

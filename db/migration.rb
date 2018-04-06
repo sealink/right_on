@@ -1,23 +1,23 @@
 class RightOnMigration < ActiveRecord::Migration
   def self.change
     create_table :rights do |t|
-      t.string :name, :controller, :action, :limit => 150
+      t.string :name, :controller, :action, limit: 150
       t.timestamps
     end
 
     change_table :rights do |t|
       t.index :action
       t.index :name
-      t.index [:controller, :action]
+      t.index %i[controller action]
     end
 
-    create_table :rights_roles, :id => false do |t|
-      t.integer :right_id, :role_id
+    create_table :rights_roles, id: false do |t|
+      t.integer %i[right_id role_id]
     end
 
     change_table :rights_roles do |t|
-      t.index [:right_id, :role_id]
-      t.index [:role_id, :right_id]
+      t.index %i[right_id role_id]
+      t.index %i[role_id right_id]
     end
 
     create_table :roles do |t|
