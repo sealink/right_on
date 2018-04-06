@@ -1,19 +1,5 @@
 require 'spec_helper'
 
-describe User do
-  let(:basic_user) { User.where(name: 'basic').first }
-  let(:admin_user) { User.where(name: 'admin').first }
-
-  before do
-    Bootstrap.reset_database
-  end
-
-  it 'should compare privileges' do
-    expect(admin_user.has_privileges_of?(basic_user)).to eq true
-    expect(basic_user.has_privileges_of?(admin_user)).to eq false
-  end
-end
-
 describe RightOn::Right do
   let(:rights) { Bootstrap.various_rights_with_actions }
   let(:users)  { rights[:users] }
