@@ -5,9 +5,8 @@ describe RightOn::PermissionDeniedResponse do
   let(:params) { { controller: 'users' } }
   subject { RightOn::PermissionDeniedResponse.new(params, controller_action_options) }
 
-  let(:allowed) {
-    double(name: 'create_user', allowed?: true, roles: [double(title: 'Users')])
-  }
+  let(:create_user_right) { double(name: 'create_user', allowed?: true, roles: [double(title: 'Users')]) }
+  let(:allowed) { double(allowed?: true) }
   let(:denied) { double(allowed?: false) }
 
   let(:no_right_for_page) {
@@ -17,12 +16,13 @@ describe RightOn::PermissionDeniedResponse do
   let(:no_roles_for_page) { 'N/A (as no right is assigned for this action)' }
 
   before do
-    stub_const 'RightOn::Right', double(all: [right])
+    stub_const 'RightOn::RightAllowed', double(new: right_allowed)
+    stub_const 'RightOn::Right', double(all: [create_user_right])
   end
 
   context '#text_message' do
     context 'when right exists' do
-      let(:right) { allowed }
+      let(:right_allowed) { allowed }
 
       specify {
         expect(subject.text_message).to eq(
@@ -35,14 +35,14 @@ describe RightOn::PermissionDeniedResponse do
     end
 
     context 'when right not allowed' do
-      let(:right) { denied }
+      let(:right_allowed) { denied }
       specify { expect(subject.text_message).to eq no_right_for_page }
     end
   end
 
   context '#to_json' do
     context 'when right exists' do
-      let(:right) { allowed }
+      let(:right_allowed) { allowed }
       specify {
         expect(subject.to_json).to eq(
           error: 'Permission Denied',
@@ -53,7 +53,7 @@ describe RightOn::PermissionDeniedResponse do
     end
 
     context 'when right allowed' do
-      let(:right) { denied }
+      let(:right_allowed) { denied }
       specify {
         expect(subject.to_json).to eq(
           error: 'Permission Denied',

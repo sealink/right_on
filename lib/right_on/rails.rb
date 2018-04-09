@@ -1,6 +1,7 @@
 require 'right_on/role_model'
 require 'right_on/right'
 require 'right_on/role'
+require 'right_on/right_allowed'
 require 'right_on/by_group'
 require 'right_on/action_controller_extensions'
 require 'right_on/permission_denied_response'

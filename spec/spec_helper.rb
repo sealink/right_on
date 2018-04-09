@@ -19,7 +19,7 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
   config.before :all do
-    RightOn::Right.cache = ActiveSupport::Cache::MemoryStore.new
+    RightOn::RightAllowed.cache = ActiveSupport::Cache::MemoryStore.new
   end
 end
 
