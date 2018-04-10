@@ -13,22 +13,6 @@ module RightOn
     after_save :clear_cache
     after_destroy :clear_cache
 
-    attr_accessor :group
-
-    class << self
-      def rights_yaml(file_path)
-        @@rights_yaml = file_path
-      end
-
-      def by_groups
-        RightOn::ByGroup.new.by_groups
-      end
-
-      def yaml_rights
-        YAML::load_file(@@rights_yaml)['rights']
-      end
-    end
-
     # Is this right allowed for the given context?
     #
     # Context params is an option hash:
