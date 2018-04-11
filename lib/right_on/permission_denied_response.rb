@@ -4,7 +4,8 @@ module RightOn
 
     def initialize(params, controller_action_options)
       @params = params
-      @right_allowed = Right.all.detect{|right| right.allowed?(controller_action_options)}
+      allower = RightAllowed.new(controller_action_options[:controller], controller_action_options[:action])
+      @right_allowed = RightOn::Right.all.detect { |right| allower.allowed?(right) }
       @roles_allowed = @right_allowed.roles if @right_allowed
       @controller_name = @params[:controller] unless @right_allowed
     end

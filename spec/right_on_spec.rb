@@ -15,32 +15,6 @@ describe RightOn::Right do
     expect(other.sensible_name).to eq 'Models'
     expect(index.sensible_name).to eq 'Models - Index'
   end
-
-  it 'should determine if it is allowed based on context' do
-    index_action = { controller: 'models', action: 'index' }
-    edit_action  = { controller: 'models', action: 'edit' }
-    hello_action = { controller: 'models', action: 'hello' }
-
-    expect(users.allowed?(controller: 'users', action: 'index')).to eq true
-    expect(users.allowed?(controller: 'users', action: 'edit')).to eq true
-    expect(users.allowed?(controller: 'users', action: 'hello')).to eq true
-
-    expect(other.allowed?(index_action)).to eq false # as specific action exists
-    expect(other.allowed?(edit_action )).to eq false # as specific action exists
-    expect(other.allowed?(hello_action)).to eq true # as hello isn't defined
-
-    expect(index.allowed?(index_action)).to eq true
-    expect(index.allowed?(edit_action )).to eq false
-    expect(index.allowed?(hello_action)).to eq false
-
-    expect(view.allowed?(index_action)).to eq true
-    expect(view.allowed?(edit_action )).to eq false
-    expect(view.allowed?(hello_action)).to eq false
-
-    expect(change.allowed?(index_action)).to eq true
-    expect(change.allowed?(edit_action )).to eq true
-    expect(change.allowed?(hello_action)).to eq false
-  end
 end
 
 describe RightOn::Right, 'when created' do

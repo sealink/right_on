@@ -35,7 +35,8 @@ module RightOn
       end
       opts[:controller] ||= params[:controller]
       opts[:action]     ||= params[:action]
-      current_user.rights.any? { |r| r.allowed?(opts.slice(:controller, :action)) }
+      allower = RightAllowed.new(opts.fetch(:controller), opts.fetch(:action))
+      current_user.rights.any? { |right| allower.allowed?(right) }
     end
 
     # Called if a security check determines permission is denied
