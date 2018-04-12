@@ -25,11 +25,15 @@ class Bootstrap
   end
 
   def self.create_right(name)
+    RightOn::Right.create!(build_right_attrs(name))
+  end
+
+  def self.build_right_attrs(name)
     if name['#']
       controller, action = name.split('#')
-      RightOn::Right.create!(name: name, controller: controller, action: action)
+      { name: name, controller: controller, action: action }
     else
-      RightOn::Right.create!(name: name, controller: name)
+      { name: name, controller: name }
     end
   end
 end

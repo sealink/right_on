@@ -55,10 +55,6 @@ module RightOn
       cache.delete('Right.all')
     end
 
-    def clear_cache
-      self.class.clear_cache
-    end
-
     attr_accessor :rights
     def self.[](name)
       @rights = cache.read('Right.all') || calculate_and_write_cache
