@@ -42,7 +42,9 @@ module RightOn
     end
 
     def rights_by_name!(name)
-      @rights_by_name[name] or fail name.inspect
+      @rights_by_name[name] or fail RightOn::RightNotFound, name.inspect
     end
   end
+
+  RightNotFound = Class.new(RightOn::Error)
 end
