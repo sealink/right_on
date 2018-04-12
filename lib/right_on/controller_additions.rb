@@ -19,7 +19,7 @@ module RightOn
     end
 
     def can_access_controller_action?(controller, action)
-      (can?(:access, controller) && !Right.where(subject: controller + '#' + action).exists?) ||
+      (can?(:access, controller) && !Right.where(ccr_subject: controller + '#' + action).exists?) ||
         can?(:access, controller + '#' + action)
     end
 
