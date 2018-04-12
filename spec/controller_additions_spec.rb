@@ -35,6 +35,8 @@ describe RightOn::ControllerAdditions do
     end
 
     class Controller < ActionController::Base
+      include RightOn::ControllerAdditions
+
       def rights_from
         nil
       end
@@ -52,10 +54,6 @@ describe RightOn::ControllerAdditions do
 
     Controller.new
   }
-
-  it 'should respond to authorize_action!' do
-    expect(controller.respond_to? :authorize_action!).to be_truthy
-  end
 
   describe 'private #authorize_action!' do
     context 'when the ability has a matching rule' do
