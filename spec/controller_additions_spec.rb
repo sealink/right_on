@@ -22,7 +22,6 @@ end
 describe RightOn::ControllerAdditions do
   let(:rule_override) { false }
   before do
-    rule_class = class_double('RightOn::ControllerAdditions::Model')
     allow(RightOn::Right).to receive(:where).and_return(double(exists?: rule_override))
   end
 
