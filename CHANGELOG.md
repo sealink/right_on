@@ -5,6 +5,8 @@ This changelog adheres to [Keep a CHANGELOG](http://keepachangelog.com/).
 
 ## Unreleased
 
+## 0.4.0
+
 ### Improved
 - Improve tests for RightOn::ByGroup
 - Internal improvement of RightOn::ByGroup
