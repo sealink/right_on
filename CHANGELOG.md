@@ -10,6 +10,7 @@ This changelog adheres to [Keep a CHANGELOG](http://keepachangelog.com/).
 - Internal improvement of RightOn::ByGroup
 - Internal extraction of 'allowed?' feature for failure message
 - CanCanRight functionality merged into RightOn
+- Cleanup of CanCanRight/RightOn merge
 
 ### Fixed
 - [TT-3352] Ensure roles currently in use cannot be deleted

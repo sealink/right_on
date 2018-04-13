@@ -22,7 +22,6 @@ end
 describe RightOn::ControllerAdditions do
   let(:rule_override) { false }
   before do
-    rule_class = class_double('RightOn::ControllerAdditions::Model')
     allow(RightOn::Right).to receive(:where).and_return(double(exists?: rule_override))
   end
 
@@ -36,6 +35,8 @@ describe RightOn::ControllerAdditions do
     end
 
     class Controller < ActionController::Base
+      include RightOn::ControllerAdditions
+
       def rights_from
         nil
       end
@@ -53,10 +54,6 @@ describe RightOn::ControllerAdditions do
 
     Controller.new
   }
-
-  it 'should respond to authorize_action!' do
-    expect(controller.respond_to? :authorize_action!).to be_truthy
-  end
 
   describe 'private #authorize_action!' do
     context 'when the ability has a matching rule' do
