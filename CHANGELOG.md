@@ -5,6 +5,8 @@ This changelog adheres to [Keep a CHANGELOG](http://keepachangelog.com/).
 
 ## Unreleased
 
+- [TT-4960] ByGroup will now return a hash sorted by role name
+
 ## 0.4.0
 
 ### Improved

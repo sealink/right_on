@@ -9,10 +9,10 @@ module RightOn
     end
 
     def by_groups
-      yaml_rights.each_pair.with_object({}) do |(group, right_names), hash|
+      yaml_rights.each_pair.with_object({}) { |(group, right_names), hash|
         hash[group] = right_names
           .flat_map { |right_name| right_name_to_rights(right_name) }
-      end
+      }.sort.to_h
     end
 
     private

@@ -5,8 +5,15 @@ RightOn.rights_yaml 'db/rights_roles.yml'
 describe RightOn::ByGroup do
   let(:rights) { Bootstrap.various_rights_with_actions }
 
+  before do
+    rights
+  end
+
+  it 'should be sorted' do
+    expect(RightOn::ByGroup.rights.keys).to eq ['admin', 'general']
+  end
+
   it 'should identify correct groups' do
-    rights # load rights
     expect(RightOn::ByGroup.rights).to eq(
       'general' => [
         rights[:models],
