@@ -1,5 +1,6 @@
 require 'active_record'
 require 'active_support/all'
+require 'cancan/parameter_validators'
 require 'cancan/rule'
 require 'right_on/error'
 require 'right_on/rule'
