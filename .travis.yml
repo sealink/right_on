@@ -1,13 +1,11 @@
 language: ruby
 rvm:
-  - 2.3
-  - 2.4
   - 2.5
   - 2.6
 script: "bundle exec rake spec"
 gemfile:
-  - gemfiles/rails4.gemfile
   - gemfiles/rails5.gemfile
+  - gemfiles/rails6.gemfile
 # fix ruby 2.5 issue - https://github.com/travis-ci/travis-ci/issues/9333
 before_install: gem install bundler
 notifications:
