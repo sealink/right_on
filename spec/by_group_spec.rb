@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RightOn.rights_yaml 'db/rights_roles.yml'
+RightOn.rights_yaml 'db/rights.yml'
 
 describe RightOn::ByGroup do
   let(:rights) { Bootstrap.various_rights_with_actions }

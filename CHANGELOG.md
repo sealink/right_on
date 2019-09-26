@@ -6,6 +6,7 @@ This changelog adheres to [Keep a CHANGELOG](http://keepachangelog.com/).
 ## Unreleased
 
 - [TT-6078] Fix Travis builds
+- [TT-6093] Only rights should be in the rights.yml
 
 ## 0.4.1
 
