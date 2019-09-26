@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).  
 This changelog adheres to [Keep a CHANGELOG](http://keepachangelog.com/).  
 
-## Unreleased
+## 1.0.0
 
 - [TT-6078] Fix Travis builds
 - [TT-6093] Only rights should be in the rights.yml
