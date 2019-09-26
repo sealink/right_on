@@ -1,0 +1,8 @@
+---
+general:
+  - models:
+    - index
+    - view
+    - change
+admin:
+  - users

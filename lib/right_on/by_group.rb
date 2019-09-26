@@ -18,7 +18,7 @@ module RightOn
     private
 
     def yaml_rights
-      YAML.load_file(RightOn.rights_yaml)['rights']
+      YAML.load_file(RightOn.rights_yaml)
     end
 
     def right_name_to_rights(right_name)
